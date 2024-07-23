@@ -21,7 +21,7 @@ services:
     restart: on-failure 
     env_file: ./.env
     volumes: 
-      - glpi-marketplace:/var/www/html/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw    
     depends_on: 
@@ -33,7 +33,7 @@ services:
     image: sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes: 
-      - glpi-marketplace:/var/www/html/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -46,7 +46,7 @@ services:
     image: sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes: 
-      - glpi-marketplace:/var/www/html/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -64,7 +64,7 @@ services:
     image: sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes:
-      - glpi-marketplace:/var/www/html/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -79,7 +79,7 @@ services:
     image: sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
     volumes: 
-      - glpi-marketplace:/var/www/html/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -91,13 +91,22 @@ services:
     ports: 
       - "9000:9000"
 
+  php-cron:
+    image: sysadminsmedia/glpi:10.0.16
+    restart: unless-stopped
+    volumes:
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on:
+      - php
+    command: ["/usr/sbin/crond", "-f", "-d", "0"]
+    
+
 volumes: 
   glpi-marketplace:
   glpi-files:
   glpi-etc:
   glpi-install:
-  mariadb-glpi-volume: 
-
-# networks: 
-#   glpi-frontend: 
-#   glpi-backend:
+  mariadb-glpi-volume:

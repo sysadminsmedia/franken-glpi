@@ -61,6 +61,11 @@ RUN \
     # Give write access to /data/caddy and /config/caddy
     chown -R ${USER}:${USER} /data/caddy && chown -R ${USER}:${USER} /config/caddy
 
+RUN touch crontab.tmp \
+    && echo '*/2 * * * * php /app/public/front/cron.php' > crontab.tmp \
+    && crontab crontab.tmp \
+    && rm -rf crontab.tmp
+
 WORKDIR /app/public
 
 ADD https://github.com/glpi-project/glpi/releases/download/${VERSION}/glpi-${VERSION}.tgz /tmp/
