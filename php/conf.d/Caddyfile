@@ -4,14 +4,24 @@
 }
 
 http://localhost:9000 {
+	root * /app/public
 	@insecure {
   		header X-Forwarded-Proto http
 	}
 
 	# Enable compression (optional)
 	encode zstd br gzip
+
 	# Execute PHP files in the current directory and serve assets
 	route {
-	   php_server
+		rewrite /api/* /apirest.php/{path}
+		@blocked path src/* config/* files/* vendor/*
+       	handle {
+       		respond @blocked "Access Denied" 403 {
+       			close
+       		}
+       	}
+
+		php_server
 	}
 }
