@@ -63,7 +63,9 @@ jobs:
         with:
           context: php/
           push: ${{ github.event_name != 'pull_request' }}
-          tags: [ 'latest', '${{ steps.glpi.outputs.release }}' ]
+          tags:
+            - 'latest'
+            - '${{ steps.glpi.outputs.release }}'
           labels:
             - latest
             - ${{ steps.glpi.outputs.release }}
