@@ -1,0 +1,112 @@
+services:
+  mariadb: 
+    image: mariadb:11.4
+    restart: unless-stopped
+    volumes: 
+      - mariadb-glpi-volume:/var/lib/mysql:rw
+    env_file: ./.env
+    ports: 
+      - 3306:3306      
+
+  mariadb-timezone: 
+    image: mariadb:11.4
+    restart: on-failure
+    env_file: ./.env
+    depends_on:
+      - mariadb
+    command: mariadb -h $MARIADB_HOST -u root -p$MARIADB_ROOT_PASSWORD -e "GRANT SELECT ON \`mysql\`.\`time_zone_name\` TO 'glpi'@'%'; FLUSH PRIVILEGES;"
+
+  glpi-db-install:
+    image: sysadminsmedia/glpi:10.0.16
+    restart: on-failure 
+    env_file: ./.env
+    volumes: 
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw    
+    depends_on: 
+      - mariadb
+    command: 
+      - /usr/local/bin/glpi-db-install.sh
+
+  glpi-verify-dir: 
+    image: sysadminsmedia/glpi:10.0.16
+    restart: on-failure
+    volumes: 
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on: 
+      - glpi-db-install
+    command: 
+      - /usr/local/bin/glpi-verify-dir.sh
+
+  glpi-db-configure: 
+    image: sysadminsmedia/glpi:10.0.16
+    restart: on-failure
+    volumes: 
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on: 
+      - glpi-verify-dir
+    command: 
+      - /usr/local/bin/glpi-db-configure.sh
+
+  redis:
+    image: redis:latest
+    restart: unless-stopped
+    env_file: ./.env
+
+  glpi-cache-configure:
+    image: sysadminsmedia/glpi:10.0.16
+    restart: on-failure
+    volumes:
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on:
+      - glpi-verify-dir
+      - redis
+    command:
+      - /usr/local/bin/glpi-cache-configure.sh
+  
+  php: 
+    build: php/
+    image: sysadminsmedia/glpi:10.0.16
+    restart: unless-stopped
+    volumes: 
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on: 
+      - mariadb
+      - glpi-db-install
+      - glpi-db-configure
+      - glpi-verify-dir
+    ports: 
+      - "9000:9000"
+
+  php-cron:
+    image: sysadminsmedia/glpi:10.0.16
+    restart: unless-stopped
+    volumes:
+      - glpi-marketplace:/app/public/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on:
+      - php
+    command: ["/usr/sbin/crond", "-f", "-d", "0"]
+    
+
+volumes: 
+  glpi-marketplace:
+  glpi-files:
+  glpi-etc:
+  glpi-install:
+  mariadb-glpi-volume:

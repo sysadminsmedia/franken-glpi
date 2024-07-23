@@ -75,7 +75,6 @@ services:
       - /usr/local/bin/glpi-cache-configure.sh
   
   php: 
-    build: php/
     image: sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
     volumes: 
