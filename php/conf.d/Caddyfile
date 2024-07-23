@@ -1,0 +1,17 @@
+{
+	# Enable FrankenPHP
+	frankenphp
+}
+
+http://localhost:9000 {
+	@insecure {
+  		header X-Forwarded-Proto http
+	}
+
+	# Enable compression (optional)
+	encode zstd br gzip
+	# Execute PHP files in the current directory and serve assets
+	route {
+	   php_server
+	}
+}
