@@ -23,7 +23,8 @@ services:
     volumes: 
       - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
-      - glpi-etc:/etc/glpi:rw    
+      - glpi-etc:/etc/glpi:rw
+      - glpi-config:/app/public/config:rw   
     depends_on: 
       - mariadb
     command: 
@@ -36,6 +37,7 @@ services:
       - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
+      - glpi-config:/app/public/config:rw
     env_file: ./.env
     depends_on: 
       - glpi-db-install
@@ -49,6 +51,7 @@ services:
       - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
+      - glpi-config:/app/public/config:rw
     env_file: ./.env
     depends_on: 
       - glpi-verify-dir
@@ -67,6 +70,7 @@ services:
       - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
+      - glpi-config:/app/public/config:rw
     env_file: ./.env
     depends_on:
       - glpi-verify-dir
@@ -77,10 +81,11 @@ services:
   php: 
     image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
-    volumes: 
+    volumes:
       - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
+      - glpi-config:/app/public/config:rw
     env_file: ./.env
     depends_on: 
       - mariadb
@@ -97,6 +102,7 @@ services:
       - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
+      - glpi-config:/app/public/config:rw
     env_file: ./.env
     depends_on:
       - php
@@ -107,5 +113,6 @@ volumes:
   glpi-marketplace:
   glpi-files:
   glpi-etc:
+  glpi-config:
   glpi-install:
   mariadb-glpi-volume:

@@ -2,7 +2,7 @@ name: Docker publish rootless
 
 on:
   schedule:
-    - cron: '00 6 * * *'
+    - cron: '0 0 1 * *' # Run this job automatically once a month to check for newer GLPI build
   push:
     branches: [ "master" ]
   pull_request:
@@ -65,15 +65,15 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
             latest
-            ${{ steps.glpi.outputs.release }}
+            ${{ steps.glpi-version.outputs.release }}
           labels: |
             latest
-            ${{ steps.glpi.outputs.release }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+            ${{ steps.glpi-version.outputs.release }}
+          platforms: linux/amd64,linux/arm64
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VERSION=${{ steps.glpi.outputs.release }}
+            VERSION=${{ steps.glpi-version.outputs.release }}
 
       - name: Attest
         uses: actions/attest-build-provenance@v1
