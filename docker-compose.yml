@@ -17,7 +17,7 @@ services:
     command: mariadb -h $MARIADB_HOST -u root -p$MARIADB_ROOT_PASSWORD -e "GRANT SELECT ON \`mysql\`.\`time_zone_name\` TO 'glpi'@'%'; FLUSH PRIVILEGES;"
 
   glpi-db-install:
-    image: sysadminsmedia/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure 
     env_file: ./.env
     volumes: 
@@ -30,7 +30,7 @@ services:
       - /usr/local/bin/glpi-db-install.sh
 
   glpi-verify-dir: 
-    image: sysadminsmedia/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes: 
       - glpi-marketplace:/app/public/marketplace:rw
@@ -43,7 +43,7 @@ services:
       - /usr/local/bin/glpi-verify-dir.sh
 
   glpi-db-configure: 
-    image: sysadminsmedia/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes: 
       - glpi-marketplace:/app/public/marketplace:rw
@@ -61,7 +61,7 @@ services:
     env_file: ./.env
 
   glpi-cache-configure:
-    image: sysadminsmedia/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes:
       - glpi-marketplace:/app/public/marketplace:rw
@@ -75,7 +75,7 @@ services:
       - /usr/local/bin/glpi-cache-configure.sh
   
   php: 
-    image: sysadminsmedia/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
     volumes: 
       - glpi-marketplace:/app/public/marketplace:rw
@@ -91,7 +91,7 @@ services:
       - "9000:9000"
 
   php-cron:
-    image: sysadminsmedia/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
     volumes:
       - glpi-marketplace:/app/public/marketplace:rw
