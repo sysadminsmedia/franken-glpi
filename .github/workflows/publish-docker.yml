@@ -64,8 +64,8 @@ jobs:
           context: php/
           push: ${{ github.event_name != 'pull_request' }}
           tags: |
-            latest
-            ${{ steps.glpi-version.outputs.release }}
+            ghcr.io/sysadminsmedia/glpi:latest
+            ghcr.io/sysadminsmedia/glpi:${{ steps.glpi-version.outputs.release }}
           labels: |
             latest
             ${{ steps.glpi-version.outputs.release }}
