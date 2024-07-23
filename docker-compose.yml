@@ -59,6 +59,20 @@ services:
     image: redis:latest
     restart: unless-stopped
     env_file: ./.env
+
+  glpi-cache-configure:
+    image: sysadminsmedia/glpi:10.0.16
+    restart: on-failure
+    volumes:
+      - glpi-marketplace:/var/www/html/marketplace:rw
+      - glpi-files:/var/lib/glpi:rw
+      - glpi-etc:/etc/glpi:rw
+    env_file: ./.env
+    depends_on:
+      - glpi-verify-dir
+      - redis
+    command:
+      - /usr/local/bin/glpi-cache-configure.sh
   
   php: 
     build: php/

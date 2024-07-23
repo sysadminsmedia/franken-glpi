@@ -48,7 +48,8 @@ RUN install-php-extensions \
     bz2 \
     exif \
     opcache \
-    zip
+    zip \
+    redis
     
 WORKDIR /app/public
 
