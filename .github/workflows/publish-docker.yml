@@ -63,9 +63,7 @@ jobs:
         with:
           context: php/
           push: ${{ github.event_name != 'pull_request' }}
-          tags:
-            - latest
-            - ${{ steps.glpi.outputs.release }}
+          tags: [ 'latest', '${{ steps.glpi.outputs.release }}' ]
           labels:
             - latest
             - ${{ steps.glpi.outputs.release }}
@@ -73,7 +71,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            VERSION=${{ ${{ steps.glpi.outputs.release }} }}
+            VERSION=${{ steps.glpi.outputs.release }}
 
       - name: Attest
         uses: actions/attest-build-provenance@v1
