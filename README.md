@@ -15,7 +15,7 @@ Original Inspiration: https://github.com/eftechcombr/glpi
 
 ### docker-compose 
 
-    ./docker/_env ---> please rename to /docker/.env
+    ./.env.example ---> please rename to /docker/.env
 
 ## About GLPI
 
