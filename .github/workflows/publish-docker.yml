@@ -5,8 +5,10 @@ on:
     - cron: '0 0 1 * *' # Run this job automatically once a month to check for newer GLPI build
   push:
     branches: [ "master" ]
+    paths: php/*
   pull_request:
     branches: [ "master" ]
+    paths: php/*
 
 env:
   # Use docker.io for Docker Hub if empty
