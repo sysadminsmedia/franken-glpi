@@ -6,7 +6,7 @@ services:
       - mariadb-glpi-volume:/var/lib/mysql:rw
     env_file: ./.env
     ports: 
-      - 3306:3306      
+      - "3306:3306"
 
   mariadb-timezone: 
     image: mariadb:11.4
