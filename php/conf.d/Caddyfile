@@ -4,24 +4,36 @@
 }
 
 http://*:9000 {
-	root * /app/public
+	root * /app/public/public
 	@insecure {
   		header X-Forwarded-Proto http
 	}
 
-	# Enable compression (optional)
+	# Enable compression
 	encode zstd br gzip
 
 	# Execute PHP files in the current directory and serve assets
 	route {
-		rewrite /api/* /apirest.php/{path}
-		@blocked path src/* config/* files/* vendor/*
-       	handle {
-       		respond @blocked "Access Denied" 403 {
-       			close
-       		}
-       	}
 
-		php_server
+		@blocked path src/* config/* files/* vendor/*
+       	respond @blocked "Access Denied" 403 {
+       		close
+       	}
+		# Add trailing slash for directory requests
+		@canonicalPath {
+			file {path}/index.php
+			not path */
+		}
+		redir @canonicalPath {path}/ 308
+		# If the requested file does not exist, try index files
+		@indexFiles file {
+			try_files {path} {path}/index.php index.php
+			split_path .php
+		}
+		rewrite @indexFiles {http.matchers.file.relative}
+		# FrankenPHP!
+		@phpFiles path *.php
+		php @phpFiles
+		file_server
 	}
 }

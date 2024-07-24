@@ -5,6 +5,8 @@ Manifest files for build and deploy the **GLPI** as Containers with Docker and F
 
 This version can handle a significant number of users, with extremely low page loading times and overall operates extremely well.
 
+Additionally, this version comes build and prepared to run straight out the box with cron jobs and redis caching, just copy the .env.example file to .env, setup the passwords and secrets, and launch with `docker compose up -d`.
+
 Original Inspiration: https://github.com/eftechcombr/glpi
 
 ## Credentials

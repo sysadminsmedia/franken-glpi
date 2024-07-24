@@ -75,11 +75,11 @@ jobs:
           build-args: |
             VERSION=${{ steps.glpi-version.outputs.release }}
 
-      - name: Attest
-        uses: actions/attest-build-provenance@v1
-        id: attest
-        if: ${{ github.event_name != 'pull_request' }}
-        with:
-          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          subject-digest: ${{ steps.build-and-push.outputs.digest }}
-          push-to-registry: true
+#      - name: Attest
+#        uses: actions/attest-build-provenance@v1
+#        id: attest
+#        if: ${{ github.event_name != 'pull_request' }}
+#        with:
+#          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+#          subject-digest: ${{ steps.build-and-push.outputs.digest }}
+#          push-to-registry: true
