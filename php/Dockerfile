@@ -1,7 +1,5 @@
 FROM dunglas/frankenphp:latest-php8.2-alpine
 
-ARG USER=www-data
-
 ENV VERSION=10.0.16 
 ENV GLPI_LANG=en_US 
 ENV MARIADB_HOST=mariadb-glpi 
@@ -53,14 +51,6 @@ RUN install-php-extensions \
     zip \
     redis
     
-RUN \
-    # Use "adduser -D ${USER}" for alpine based distros
-    useradd -D ${USER}; \
-    # Remove default capability
-    setcap -r /usr/local/bin/frankenphp; \
-    # Give write access to /data/caddy and /config/caddy
-    chown -R ${USER}:${USER} /data/caddy && chown -R ${USER}:${USER} /config/caddy
-
 RUN touch crontab.tmp \
     && echo '*/2 * * * * php /app/public/front/cron.php' > crontab.tmp \
     && crontab crontab.tmp \
@@ -81,7 +71,5 @@ RUN chmod +x /usr/local/bin/glpi-*.sh \
 && /usr/local/bin/glpi-verify-dir.sh
 
 RUN rm -rf /app/public/install/install.php
-
-USER ${USER}
 
 EXPOSE 9000/tcp
