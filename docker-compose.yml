@@ -21,7 +21,7 @@ services:
     restart: on-failure 
     env_file: ./.env
     volumes: 
-      - glpi-marketplace:/app/public/public/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     depends_on: 
@@ -30,10 +30,10 @@ services:
       - /usr/local/bin/glpi-db-install.sh
 
   glpi-verify-dir: 
-    image: ghcr.io/sysadminsmedia/public/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes: 
-      - glpi-marketplace:/app/public/public/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -46,7 +46,7 @@ services:
     image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes: 
-      - glpi-marketplace:/app/public/public/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -64,7 +64,7 @@ services:
     image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: on-failure
     volumes:
-      - glpi-marketplace:/app/public/public/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -78,7 +78,7 @@ services:
     image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
     volumes:
-      - glpi-marketplace:/app/public/public/marketplace:rw
+      - glpi-marketplace:/app/public/marketplace:rw
       - glpi-files:/var/lib/glpi:rw
       - glpi-etc:/etc/glpi:rw
     env_file: ./.env
@@ -91,7 +91,7 @@ services:
       - "9000:9000"
 
   php-cron:
-    image: ghcr.io/sysadminsmedia/public/glpi:10.0.16
+    image: ghcr.io/sysadminsmedia/glpi:10.0.16
     restart: unless-stopped
     volumes:
       - glpi-marketplace:/app/public/marketplace:rw
