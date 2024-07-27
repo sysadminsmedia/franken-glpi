@@ -1,9 +1,12 @@
 {
 	# Enable FrankenPHP
 	frankenphp
+	automate_https {
+		disable: true
+	}
 }
 
-http://*:9000 {
+http://* {
 	root * /app/public/public
 	@insecure {
   		header X-Forwarded-Proto http
