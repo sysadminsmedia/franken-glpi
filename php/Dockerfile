@@ -1,6 +1,6 @@
 FROM dunglas/frankenphp:latest-php8.2-alpine
 
-ENV VERSION=10.0.16 
+ENV VERSION=10.0.17 
 ENV GLPI_LANG=en_US 
 ENV MARIADB_HOST=mariadb-glpi 
 ENV MARIADB_PORT=3306 
