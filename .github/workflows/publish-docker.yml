@@ -9,6 +9,7 @@ on:
   pull_request:
     branches: [ "master" ]
     paths: php/*
+  workflow_dispatch:
 
 env:
   # Use docker.io for Docker Hub if empty
