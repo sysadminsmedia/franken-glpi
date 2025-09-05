@@ -1,6 +1,8 @@
 FROM dunglas/frankenphp:latest-php8.2-alpine
 
-ARG VERSION=11.0.0-alpha1
+# GLPI version - can be overridden at build time with --build-arg VERSION=x.x.x
+# Check available versions at: https://github.com/glpi-project/glpi/releases
+ARG VERSION=11.0.0
 
 ENV VERSION=${VERSION}
 ENV GLPI_LANG=en_US 
