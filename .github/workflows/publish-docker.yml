@@ -1,4 +1,4 @@
-name: Docker publish rootless
+name: Docker publish
 
 on:
   schedule:
@@ -37,7 +37,6 @@ jobs:
       matrix:
         platform:
           - linux/amd64
-          - linux/amd64/v3
           - linux/arm64
 
     steps:
@@ -178,4 +177,5 @@ jobs:
         working-directory: /tmp/digests
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
+
             $(printf '${{ env.GHCR_REPO }}@sha256:%s ' *)
