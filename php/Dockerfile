@@ -1,6 +1,6 @@
 FROM dunglas/frankenphp:latest-php8.2-alpine
 
-ARG VERSION=10.0.17
+ARG VERSION=11.0.0-alpha1
 
 ENV VERSION=${VERSION}
 ENV GLPI_LANG=en_US 

@@ -10,6 +10,12 @@ on:
     branches: [ "master" ]
     paths: php/*
   workflow_dispatch:
+    inputs:
+      include_prerelease:
+        description: 'Include pre-release versions'
+        required: false
+        default: 'true'
+        type: boolean
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -91,7 +97,7 @@ jobs:
         with:
           owner: glpi-project
           repo: glpi
-          excludes: draft
+          excludes: ${{ inputs.include_prerelease == 'true' && 'draft' || 'prerelease,draft' }}
 
       - name: Build and push by digest
         id: build
@@ -161,7 +167,7 @@ jobs:
         with:
           owner: glpi-project
           repo: glpi
-          excludes: draft
+          excludes: ${{ inputs.include_prerelease == 'true' && 'draft' || 'prerelease,draft' }}
 
       - name: Docker meta
         id: meta
