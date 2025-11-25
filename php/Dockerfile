@@ -1,6 +1,6 @@
-FROM dunglas/frankenphp:latest-php8.2-alpine
+FROM dunglas/frankenphp:latest-php8.3-alpine
 
-ARG VERSION=10.0.17
+ARG VERSION=11.0.2
 
 ENV VERSION=${VERSION}
 ENV GLPI_LANG=en_US 
@@ -11,7 +11,7 @@ ENV MARIADB_USER=glpi
 ENV MARIADB_PASSWORD=glpi 
 ENV GLPI_CONFIG_DIR=/etc/glpi/config 
 ENV GLPI_VAR_DIR=/var/lib/glpi 
-ENV GLPI_MARKETPLACE_DIR=${GLPI_VAR_DIR}/_marketplace 
+ENV GLPI_MARKETPLACE_DIR=/app/public/marketplace 
 ENV GLPI_DOC_DIR=${GLPI_VAR_DIR} 
 ENV GLPI_CRON_DIR=${GLPI_VAR_DIR}/_cron 
 ENV GLPI_DUMP_DIR=${GLPI_VAR_DIR}/_dumps 
